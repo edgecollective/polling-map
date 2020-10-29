@@ -58,12 +58,13 @@ var thiscell;
 		
 }
 
-console.log(viewData);
-
+//console.log(viewData);
+return(viewData);
 	} catch(error) {
     console.log(error.message, error.stack);
   }
+
 }
 
-getStuff();
+getStuff().then((value) => console.log(value))
 
