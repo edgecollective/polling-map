@@ -9,7 +9,7 @@
     .then((myJson) => {
       //console.log("hallo");
       console.log(myJson);
-    });
+  
 
     var mymap = L.map('mapid').setView([51.505, -0.09], 13);
 
@@ -23,21 +23,40 @@
 		zoomOffset: -1
 	}).addTo(mymap);
 
+    /*
 	L.marker([51.5, -0.09]).addTo(mymap)
 		.bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
-
+*/
+/*
 	L.circle([51.508, -0.11], 500, {
 		color: 'red',
 		fillColor: '#f03',
 		fillOpacity: 0.5
 	}).addTo(mymap).bindPopup("I am a circle.");
-
+*/
+    /*
 	L.polygon([
 		[51.509, -0.08],
 		[51.503, -0.06],
 		[51.51, -0.047]
-	]).addTo(mymap).bindPopup("I am a polygon.");
+    ]).addTo(mymap).bindPopup("I am a polygon.");
+    */
 
+/*
+    for(var attributename in myJson){
+        console.log(attributename+": "+myJson[attributename]);
+    }
+    */
+
+   for(var i = 0; i < myJson.length; i++) {
+    var obj = myJson[i];
+
+    L.circle([obj.lat, obj.lon], 300, {
+		color: 'blue',
+		fillColor: '#f03',
+		fillOpacity: 0.5
+	}).addTo(mymap).bindPopup(obj.station);
+}
 
 	var popup = L.popup();
 
@@ -48,4 +67,6 @@
 			.openOn(mymap);
 	}
 
-	mymap.on('click', onMapClick);
+    mymap.on('click', onMapClick);
+    
+});
