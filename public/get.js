@@ -6,10 +6,13 @@
     .then((response) => {
       return response.json();
     })
-    .then((myJson) => {
+    .then((backArray) => {
       //console.log("hallo");
       //console.log(myJson);
   
+	  console.log("backArray",backArray);
+	  var myJson = backArray[0];
+
 	  var ave_lat=0.;
 	  var ave_lon=0.;
 
@@ -23,7 +26,7 @@
 	  }
 	  //console.log("points=",myPoints);
 
-	  //var bounds=L.bounds(myPoints);
+	  var bounds=L.bounds(myPoints);
 	  //console.log(bounds);
 
 	  //console.log("myJson.length=",myJson.length);
@@ -50,14 +53,30 @@
 
 	mymap.setView(new L.LatLng(ave_lat, ave_lon), 11);
 
+	//mymap.fitBounds(bounds);
+
+	//mymap.setView(markersLayer.getBounds().getCenter());
+
    for(var i = 0; i < myJson.length; i++) {
     var obj = myJson[i];
 
+	var str1 = "<b>Polling Location:</b><br>";
+	str1=str1.concat(obj.station);
+	str1=str1.concat("<br>");
+	str1=str1.concat("<b>Volunteers:</b>");
+	for(var j = 0; j < obj.volunteers.length; j++) {
+    str1=str1.concat("<br>");
+	str1=str1.concat("-");
+	str1=str1.concat(obj.volunteers[j]);
+	}
+	
+
+	
     L.circle([obj.lat, obj.lon], 400, {
 		color: 'red',
 		fillColor: '#f03',
 		fillOpacity: 0.5
-	}).addTo(mymap).bindPopup(obj.station);
+	}).addTo(mymap).bindPopup(str1);
 }
 
 	var popup = L.popup();

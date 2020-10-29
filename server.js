@@ -18,40 +18,69 @@ doc.useApiKey(doc_info['api_key']);
 await doc.loadInfo(); // loads document properties and worksheets
 console.log("Doc title:",doc.title);
 
-const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id]
+const sheet_locations = doc.sheetsByIndex[0]; // or use doc.sheetsById[id]
+await sheet_locations.loadCells()
 
-
-await sheet.loadCells()
+const sheet_volunteers = doc.sheetsByIndex[1]; // or use doc.sheetsById[id]
+await sheet_volunteers.loadCells()
 
 var thiscell;
 
-		const header = await sheet.getCell(0,0);
+		const header = await sheet_locations.getCell(0,0);
 		console.log('header:',header.value);
 
+		var allData = [];
 		var viewData = [];
 
 
-	for (let i = 1; i < sheet.rowCount; i++) {
+	for (let i = 1; i < sheet_locations.rowCount; i++) {
 
 		
-		thiscell = await sheet.getCell(i,0);
+		thiscell = await sheet_locations.getCell(i,0);
 		if(thiscell.value !== null) {
 		// the polling station
-		thiscell = await sheet.getCell(i,1);
+		thiscell = await sheet_locations.getCell(i,1);
 		var station = thiscell.value;
 
 		// latitude
-		thiscell = await sheet.getCell(i,13);
+		thiscell = await sheet_locations.getCell(i,13);
 		var lat = thiscell.value;
 
 		// longitude
-		thiscell = await sheet.getCell(i,14);
+		thiscell = await sheet_locations.getCell(i,14);
 		var lon = thiscell.value;
+
+
+		var volunteers = [];
+		// volunteer, column E
+		thiscell = await sheet_volunteers.getCell(i+1,4);
+		if(thiscell.value!==null) {
+		volunteers.push(thiscell.value);
+		}
+		// volunteer, column G
+		thiscell = await sheet_volunteers.getCell(i+1,6);
+		if(thiscell.value!==null) {
+		volunteers.push(thiscell.value);
+		}
+		// volunteer, column I
+		thiscell = await sheet_volunteers.getCell(i+1,8);
+		if(thiscell.value!==null) {
+		volunteers.push(thiscell.value);
+		}
+		// volunteer, column I
+		thiscell = await sheet_volunteers.getCell(i+1,10);
+		if(thiscell.value!==null) {
+		volunteers.push(thiscell.value);
+		}
+
+
 
 		var jsonData = {};
 		jsonData["station"]=station;
 		jsonData["lat"]=lat;
 		jsonData["lon"]=lon;
+		jsonData["volunteers"]=volunteers;
+
 
 		//console.log("beep:",jsonData);
 			
@@ -62,8 +91,12 @@ var thiscell;
 		
 }
 
+allData.push(viewData);
+allData.push(["booble"]);
+
+
 //console.log(viewData);
-return(viewData);
+return(allData);
 	} catch(error) {
     console.log(error.message, error.stack);
   }
