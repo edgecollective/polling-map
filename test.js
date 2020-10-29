@@ -27,7 +27,11 @@ var thiscell;
 
 		const header = await sheet.getCell(0,0);
 		console.log('header:',header.value);
+
+		var viewData = [];
+
 	for (let i = 1; i < sheet.rowCount; i++) {
+
 		
 		thiscell = await sheet.getCell(i,0);
 		if(thiscell.value !== null) {
@@ -43,9 +47,18 @@ var thiscell;
 		thiscell = await sheet.getCell(i,2);
 		var lon = thiscell.value;
 
-		console.log(station,lat,lon);
+		var jsonData = {};
+		jsonData["station"]=station;
+		jsonData["lat"]=lat;
+		jsonData["lon"]=lon;
+
+		viewData.push(jsonData);
 		}
+
+		
 }
+
+console.log(viewData);
 
 	} catch(error) {
     console.log(error.message, error.stack);
