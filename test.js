@@ -27,8 +27,10 @@ var thiscell;
 
 		const header = await sheet.getCell(0,0);
 		console.log('header:',header.value);
-	for (let i = 1; i < 3; i++) {
+	for (let i = 1; i < sheet.rowCount; i++) {
 		
+		thiscell = await sheet.getCell(i,0);
+		if(thiscell.value !== null) {
 		// the polling station
 		thiscell = await sheet.getCell(i,0);
 		var station = thiscell.value;
@@ -42,6 +44,7 @@ var thiscell;
 		var lon = thiscell.value;
 
 		console.log(station,lat,lon);
+		}
 }
 
 	} catch(error) {
