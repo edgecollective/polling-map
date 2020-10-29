@@ -48,18 +48,7 @@
 		zoomOffset: -1
 	}).addTo(mymap);
 
-	//console.log("x=",bounds.getCenter().x);
-	//console.log("y=",bounds.getCenter().y);
-
-
 	mymap.setView(new L.LatLng(ave_lat, ave_lon), 11);
-
-	
-	L.circle([ave_lat, ave_lat], 1000, {
-		color: 'red',
-		fillColor: '#f03',
-		fillOpacity: 1
-	}).addTo(mymap).bindPopup("yeah");
 
    for(var i = 0; i < myJson.length; i++) {
     var obj = myJson[i];
