@@ -10,8 +10,7 @@
       //console.log("hallo");
       console.log(myJson);
   
-
-    var mymap = L.map('mapid').setView([51.505, -0.09], 13);
+    var mymap = L.map('mapid').setView([myJson[0].lat,myJson[0].lon], 12);
 
 	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
 		maxZoom: 18,
@@ -23,36 +22,12 @@
 		zoomOffset: -1
 	}).addTo(mymap);
 
-    /*
-	L.marker([51.5, -0.09]).addTo(mymap)
-		.bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
-*/
-/*
-	L.circle([51.508, -0.11], 500, {
-		color: 'red',
-		fillColor: '#f03',
-		fillOpacity: 0.5
-	}).addTo(mymap).bindPopup("I am a circle.");
-*/
-    /*
-	L.polygon([
-		[51.509, -0.08],
-		[51.503, -0.06],
-		[51.51, -0.047]
-    ]).addTo(mymap).bindPopup("I am a polygon.");
-    */
-
-/*
-    for(var attributename in myJson){
-        console.log(attributename+": "+myJson[attributename]);
-    }
-    */
 
    for(var i = 0; i < myJson.length; i++) {
     var obj = myJson[i];
 
-    L.circle([obj.lat, obj.lon], 300, {
-		color: 'blue',
+    L.circle([obj.lat, obj.lon], 400, {
+		color: 'red',
 		fillColor: '#f03',
 		fillOpacity: 0.5
 	}).addTo(mymap).bindPopup(obj.station);
@@ -60,6 +35,7 @@
 
 	var popup = L.popup();
 
+    /*
 	function onMapClick(e) {
 		popup
 			.setLatLng(e.latlng)
@@ -68,5 +44,6 @@
 	}
 
     mymap.on('click', onMapClick);
-    
+    */
+
 });
