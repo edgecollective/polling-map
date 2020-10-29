@@ -39,15 +39,15 @@ var thiscell;
 		thiscell = await sheet.getCell(i,0);
 		if(thiscell.value !== null) {
 		// the polling station
-		thiscell = await sheet.getCell(i,0);
+		thiscell = await sheet.getCell(i,1);
 		var station = thiscell.value;
 
 		// latitude
-		thiscell = await sheet.getCell(i,1);
+		thiscell = await sheet.getCell(i,13);
 		var lat = thiscell.value;
 
 		// longitude
-		thiscell = await sheet.getCell(i,2);
+		thiscell = await sheet.getCell(i,14);
 		var lon = thiscell.value;
 
 		var jsonData = {};
