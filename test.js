@@ -1,23 +1,49 @@
 const os = require('os')
 const path = require("path");
-const apikey = require(path.join(os.homedir(), '.polling_api_key.json'))
+const doc_info = require(path.join(os.homedir(), '.polling_doc_info.json'))
 
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 // spreadsheet key is the long id in the sheets URL
-const doc = new GoogleSpreadsheet('1VxSqzLrYRwqdWXtDbiyDYYFHcoYEaGDuGmsMCcBiWNI');
+const doc = new GoogleSpreadsheet(doc_info['doc_id']);
 
 async function getStuff() {
 
 	try{
 
-doc.useApiKey(apikey['key']);
+doc.useApiKey(doc_info['api_key']);
 await doc.loadInfo(); // loads document properties and worksheets
-console.log(doc.title);
+console.log("Doc title:",doc.title);
 
 const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id]
-console.log(sheet.title);
-console.log(sheet.rowCount);
+//console.log(sheet.title);
+//console.log(sheet.rowCount);
+
+//const rows = await sheet.getRows();
+
+await sheet.loadCells()
+
+var thiscell;
+
+		const header = await sheet.getCell(0,0);
+		console.log('header:',header.value);
+	for (let i = 1; i < 3; i++) {
+		
+		// the polling station
+		thiscell = await sheet.getCell(i,0);
+		var station = thiscell.value;
+
+		// latitude
+		thiscell = await sheet.getCell(i,1);
+		var lat = thiscell.value;
+
+		// longitude
+		thiscell = await sheet.getCell(i,2);
+		var lon = thiscell.value;
+
+		console.log(station,lat,lon);
+}
+
 	} catch(error) {
     console.log(error.message, error.stack);
   }
