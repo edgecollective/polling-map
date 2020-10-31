@@ -50,3 +50,33 @@ function setViewToInputValues(){
 
 document.getElementById("pan").addEventListener('click', setViewToInputValues)
 
+  var menu = document.getElementById("locality-dropdown");
+menu.addEventListener("change", generateData);
+
+function generateData(event) {
+  if (menu.value == '1') {
+	alert(1);
+	console.log('yeah');
+  } else if (menu.value == '2') {
+    alert(2);
+  } else if (menu.value == '3') {
+    alert(3);
+  }
+}
+
+  
+  let dropdown = document.getElementById('locality-dropdown');
+dropdown.length = 0;
+
+let defaultOption = document.createElement('option');
+defaultOption.text = 'Gainsville';
+
+dropdown.add(defaultOption);
+dropdown.selectedIndex = 0;
+
+let option;
+
+option = document.createElement('option');
+option.text = 'yeah'
+option.value = '3'
+dropdown.add(option);
